@@ -3,6 +3,7 @@ import Header from "@/components/Header";
 import Hero from "@/components/Hero";
 import Features from "@/components/Features";
 import HowItWorks from "@/components/HowItWorks";
+import Pricing from "@/components/Pricing";
 import FileUpload from "@/components/FileUpload";
 import AnalysisResult, { AnalysisData } from "@/components/AnalysisResult";
 import Footer from "@/components/Footer";
@@ -54,6 +55,7 @@ const Index = () => {
           <Hero onGetStarted={scrollToUpload} />
           <Features />
           <HowItWorks />
+          <Pricing />
           <div ref={uploadRef}>
             <FileUpload 
               onFileSelect={handleFileSelect} 
