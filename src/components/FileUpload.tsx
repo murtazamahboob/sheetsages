@@ -1,13 +1,15 @@
 import { useState, useCallback } from "react";
-import { Upload, FileSpreadsheet, X, Loader2 } from "lucide-react";
+import { Upload, FileSpreadsheet, X, Loader2, Lock } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Link } from "react-router-dom";
 
 interface FileUploadProps {
   onFileSelect: (file: File) => void;
   isProcessing: boolean;
+  isAuthenticated: boolean;
 }
 
-const FileUpload = ({ onFileSelect, isProcessing }: FileUploadProps) => {
+const FileUpload = ({ onFileSelect, isProcessing, isAuthenticated }: FileUploadProps) => {
   const [isDragging, setIsDragging] = useState(false);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
 
@@ -25,11 +27,13 @@ const FileUpload = ({ onFileSelect, isProcessing }: FileUploadProps) => {
     e.preventDefault();
     setIsDragging(false);
     
+    if (!isAuthenticated) return;
+    
     const file = e.dataTransfer.files[0];
     if (file && isValidFile(file)) {
       setSelectedFile(file);
     }
-  }, []);
+  }, [isAuthenticated]);
 
   const handleFileInput = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -56,6 +60,51 @@ const FileUpload = ({ onFileSelect, isProcessing }: FileUploadProps) => {
   const clearFile = () => {
     setSelectedFile(null);
   };
+
+  if (!isAuthenticated) {
+    return (
+      <section id="demo" className="py-24 bg-gradient-subtle">
+        <div className="container mx-auto px-4">
+          <div className="max-w-2xl mx-auto text-center mb-12">
+            <h2 className="font-display text-3xl md:text-4xl font-bold mb-4">
+              Upload Your Spreadsheet
+            </h2>
+            <p className="text-muted-foreground">
+              Create an account to start analyzing your spreadsheets with AI
+            </p>
+          </div>
+
+          <div className="max-w-xl mx-auto">
+            <div className="relative border-2 border-dashed rounded-2xl p-12 text-center border-border bg-card/50">
+              <div className="w-16 h-16 mx-auto mb-6 rounded-2xl bg-secondary flex items-center justify-center">
+                <Lock className="w-8 h-8 text-muted-foreground" />
+              </div>
+              
+              <h3 className="font-display font-semibold text-lg mb-2">
+                Sign up to unlock
+              </h3>
+              <p className="text-sm text-muted-foreground mb-6">
+                Create a free account to analyze up to 3 spreadsheets per month
+              </p>
+              
+              <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+                <Link to="/signup">
+                  <Button variant="hero" size="lg">
+                    Create Free Account
+                  </Button>
+                </Link>
+                <Link to="/login">
+                  <Button variant="outline" size="lg">
+                    Sign In
+                  </Button>
+                </Link>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    );
+  }
 
   return (
     <section id="demo" className="py-24 bg-gradient-subtle">
