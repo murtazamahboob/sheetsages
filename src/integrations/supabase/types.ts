@@ -14,16 +14,101 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      analysis_history: {
+        Row: {
+          analysis_summary: Json | null
+          created_at: string
+          file_name: string
+          file_size: number | null
+          id: string
+          insights: Json | null
+          recommendations: Json | null
+          user_id: string
+        }
+        Insert: {
+          analysis_summary?: Json | null
+          created_at?: string
+          file_name: string
+          file_size?: number | null
+          id?: string
+          insights?: Json | null
+          recommendations?: Json | null
+          user_id: string
+        }
+        Update: {
+          analysis_summary?: Json | null
+          created_at?: string
+          file_name?: string
+          file_size?: number | null
+          id?: string
+          insights?: Json | null
+          recommendations?: Json | null
+          user_id?: string
+        }
+        Relationships: []
+      }
+      profiles: {
+        Row: {
+          analysis_reset_date: string
+          avatar_url: string | null
+          created_at: string
+          email: string
+          full_name: string | null
+          id: string
+          monthly_analysis_count: number
+          stripe_customer_id: string | null
+          stripe_subscription_id: string | null
+          subscription_plan: Database["public"]["Enums"]["subscription_plan"]
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          analysis_reset_date?: string
+          avatar_url?: string | null
+          created_at?: string
+          email: string
+          full_name?: string | null
+          id?: string
+          monthly_analysis_count?: number
+          stripe_customer_id?: string | null
+          stripe_subscription_id?: string | null
+          subscription_plan?: Database["public"]["Enums"]["subscription_plan"]
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          analysis_reset_date?: string
+          avatar_url?: string | null
+          created_at?: string
+          email?: string
+          full_name?: string | null
+          id?: string
+          monthly_analysis_count?: number
+          stripe_customer_id?: string | null
+          stripe_subscription_id?: string | null
+          subscription_plan?: Database["public"]["Enums"]["subscription_plan"]
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      can_user_analyze: { Args: { p_user_id: string }; Returns: boolean }
+      get_plan_limits: {
+        Args: { plan: Database["public"]["Enums"]["subscription_plan"] }
+        Returns: number
+      }
+      increment_analysis_count: {
+        Args: { p_user_id: string }
+        Returns: undefined
+      }
     }
     Enums: {
-      [_ in never]: never
+      subscription_plan: "free" | "pro" | "business"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -150,6 +235,8 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      subscription_plan: ["free", "pro", "business"],
+    },
   },
 } as const
