@@ -78,8 +78,8 @@ const Pricing = () => {
   return (
     <section id="pricing" className="py-24 bg-background">
       <div className="container mx-auto px-4">
-        <div className="max-w-2xl mx-auto text-center mb-16">
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-secondary border border-border mb-6">
+        <div className="max-w-2xl mx-auto text-center mb-16 animate-fade-in">
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-secondary border border-border mb-6 hover-scale">
             <span className="text-sm text-muted-foreground">Simple, transparent pricing</span>
           </div>
           <h2 className="font-display text-3xl md:text-4xl font-bold mb-4">
@@ -94,15 +94,16 @@ const Pricing = () => {
           {plans.map((plan, index) => (
             <div
               key={index}
-              className={`relative rounded-2xl p-8 transition-all duration-300 ${
+              className={`relative rounded-2xl p-8 transition-all duration-500 animate-fade-in group ${
                 plan.popular
-                  ? 'bg-card border-2 border-primary shadow-glow scale-[1.02]'
-                  : 'bg-card border border-border shadow-soft hover:shadow-medium hover:border-primary/30'
+                  ? 'bg-card border-2 border-primary shadow-glow scale-[1.02] hover:scale-[1.04]'
+                  : 'bg-card border border-border shadow-soft hover:shadow-medium hover:border-primary/30 hover:scale-[1.02]'
               }`}
+              style={{ animationDelay: `${index * 150}ms` }}
             >
               {plan.popular && (
-                <div className="absolute -top-4 left-1/2 -translate-x-1/2">
-                  <span className="px-4 py-1.5 rounded-full bg-gradient-hero text-primary-foreground text-sm font-medium">
+                <div className="absolute -top-4 left-1/2 -translate-x-1/2 animate-scale-in">
+                  <span className="px-4 py-1.5 rounded-full bg-gradient-hero text-primary-foreground text-sm font-medium shadow-glow">
                     Most Popular
                   </span>
                 </div>
@@ -110,14 +111,14 @@ const Pricing = () => {
 
               {/* Header */}
               <div className="text-center mb-8">
-                <div className={`inline-flex items-center justify-center w-12 h-12 rounded-xl mb-4 ${
+                <div className={`inline-flex items-center justify-center w-12 h-12 rounded-xl mb-4 transition-transform duration-300 group-hover:scale-110 group-hover:rotate-3 ${
                   plan.popular ? 'bg-primary/10' : 'bg-secondary'
                 }`}>
                   <span className="text-primary">{plan.icon}</span>
                 </div>
                 <h3 className="font-display font-bold text-2xl mb-2">{plan.name}</h3>
                 <div className="flex items-baseline justify-center gap-1 mb-2">
-                  <span className="font-display font-bold text-4xl">{plan.price}</span>
+                  <span className="font-display font-bold text-4xl transition-all duration-300 group-hover:scale-110">{plan.price}</span>
                   <span className="text-muted-foreground text-sm">/{plan.period}</span>
                 </div>
                 <p className="text-sm text-muted-foreground">{plan.description}</p>
@@ -126,9 +127,13 @@ const Pricing = () => {
               {/* Features */}
               <ul className="space-y-3 mb-8">
                 {plan.features.map((feature, featureIndex) => (
-                  <li key={featureIndex} className="flex items-start gap-3">
+                  <li 
+                    key={featureIndex} 
+                    className="flex items-start gap-3 transition-all duration-200 hover:translate-x-1"
+                    style={{ animationDelay: `${(index * 150) + (featureIndex * 50)}ms` }}
+                  >
                     {feature.included ? (
-                      <div className="w-5 h-5 rounded-full bg-success/10 flex items-center justify-center shrink-0 mt-0.5">
+                      <div className="w-5 h-5 rounded-full bg-success/10 flex items-center justify-center shrink-0 mt-0.5 transition-transform duration-200 group-hover:scale-110">
                         <Check className="w-3 h-3 text-success" />
                       </div>
                     ) : (
@@ -136,7 +141,7 @@ const Pricing = () => {
                         <X className="w-3 h-3 text-muted-foreground" />
                       </div>
                     )}
-                    <span className={feature.included ? 'text-foreground' : 'text-muted-foreground'}>
+                    <span className={`transition-colors duration-200 ${feature.included ? 'text-foreground' : 'text-muted-foreground'}`}>
                       {feature.text}
                     </span>
                   </li>
@@ -147,7 +152,7 @@ const Pricing = () => {
               <Link to={plan.ctaLink}>
                 <Button 
                   variant={plan.variant} 
-                  className="w-full" 
+                  className="w-full transition-all duration-300 hover:scale-[1.02] active:scale-[0.98]" 
                   size="lg"
                 >
                   {plan.cta}
@@ -158,23 +163,23 @@ const Pricing = () => {
         </div>
 
         {/* Trust badges */}
-        <div className="flex flex-wrap items-center justify-center gap-6 mt-16 text-sm text-muted-foreground">
-          <div className="flex items-center gap-2">
+        <div className="flex flex-wrap items-center justify-center gap-6 mt-16 text-sm text-muted-foreground animate-fade-in" style={{ animationDelay: '500ms' }}>
+          <div className="flex items-center gap-2 transition-transform duration-200 hover:scale-105">
             <Check className="w-4 h-4 text-success" />
             <span>No credit card required for free plan</span>
           </div>
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2 transition-transform duration-200 hover:scale-105">
             <Check className="w-4 h-4 text-success" />
             <span>14-day free trial on Pro</span>
           </div>
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2 transition-transform duration-200 hover:scale-105">
             <Check className="w-4 h-4 text-success" />
             <span>Cancel anytime</span>
           </div>
         </div>
 
         {/* Paddle Badge */}
-        <div className="text-center mt-8">
+        <div className="text-center mt-8 animate-fade-in" style={{ animationDelay: '600ms' }}>
           <p className="text-sm text-muted-foreground">
             Secure payments powered by <span className="font-medium">Paddle</span>
           </p>
