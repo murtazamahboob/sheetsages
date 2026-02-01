@@ -1,5 +1,6 @@
 import { Check, X, Sparkles, Zap, Building2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Link } from "react-router-dom";
 
 const Pricing = () => {
   const plans = [
@@ -22,6 +23,7 @@ const Pricing = () => {
         { text: "API access", included: false },
       ],
       cta: "Get Started Free",
+      ctaLink: "/signup",
       variant: "outline" as const,
       popular: false,
     },
@@ -44,6 +46,7 @@ const Pricing = () => {
         { text: "API access", included: false },
       ],
       cta: "Start Pro Trial",
+      ctaLink: "/signup",
       variant: "hero" as const,
       popular: true,
     },
@@ -66,6 +69,7 @@ const Pricing = () => {
         { text: "Full API access", included: true },
       ],
       cta: "Contact Sales",
+      ctaLink: "/contact",
       variant: "outline" as const,
       popular: false,
     },
@@ -140,13 +144,15 @@ const Pricing = () => {
               </ul>
 
               {/* CTA */}
-              <Button 
-                variant={plan.variant} 
-                className="w-full" 
-                size="lg"
-              >
-                {plan.cta}
-              </Button>
+              <Link to={plan.ctaLink}>
+                <Button 
+                  variant={plan.variant} 
+                  className="w-full" 
+                  size="lg"
+                >
+                  {plan.cta}
+                </Button>
+              </Link>
             </div>
           ))}
         </div>
@@ -165,6 +171,13 @@ const Pricing = () => {
             <Check className="w-4 h-4 text-success" />
             <span>Cancel anytime</span>
           </div>
+        </div>
+
+        {/* Paddle Badge */}
+        <div className="text-center mt-8">
+          <p className="text-sm text-muted-foreground">
+            Secure payments powered by <span className="font-medium">Paddle</span>
+          </p>
         </div>
       </div>
     </section>
