@@ -44,14 +44,14 @@ const Terms = () => {
               <h2 className="text-xl font-semibold text-foreground">4. Subscription and Payments</h2>
               <p>
                 Some features of the Service require a paid subscription. <strong>All payments are processed by 
-                Paddle, the Merchant of Record for all our orders.</strong> Paddle handles all customer service 
+                Lemon Squeezy, the Merchant of Record for all our orders.</strong> Lemon Squeezy handles all customer service 
                 inquiries and returns for payments.
               </p>
               <p>By subscribing to a paid plan, you agree to:</p>
               <ul className="list-disc pl-6 space-y-2">
                 <li>Pay the applicable fees for your chosen subscription plan</li>
                 <li>Provide accurate and complete billing information</li>
-                <li>Authorize Paddle to charge your payment method on a recurring basis</li>
+                <li>Authorize Lemon Squeezy to charge your payment method on a recurring basis</li>
                 <li>Subscription fees are billed in advance on a monthly or annual basis</li>
               </ul>
               <p>
@@ -82,7 +82,7 @@ const Terms = () => {
                 <li>Refunds may be issued for duplicate payments or technical issues</li>
                 <li>Refund requests must be made within 14 days of the charge</li>
                 <li>Change of mind or partial usage does not qualify for refunds</li>
-                <li>All refunds are processed by Paddle</li>
+                <li>All refunds are processed by Lemon Squeezy</li>
               </ul>
             </section>
 
