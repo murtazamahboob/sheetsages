@@ -60,7 +60,7 @@ const Header = () => {
           {user ? (
             <>
               <span className="text-sm text-muted-foreground">
-                {user.email}
+                {user.user_metadata?.full_name || user.user_metadata?.name || user.email}
               </span>
               <Button variant="ghost" size="sm" onClick={handleLogout}>
                 <LogOut className="w-4 h-4 mr-2" />
@@ -117,7 +117,7 @@ const Header = () => {
               {user ? (
                 <>
                   <span className="text-sm text-muted-foreground">
-                    {user.email}
+                    {user.user_metadata?.full_name || user.user_metadata?.name || user.email}
                   </span>
                   <Button variant="ghost" size="sm" onClick={handleLogout}>
                     <LogOut className="w-4 h-4 mr-2" />
