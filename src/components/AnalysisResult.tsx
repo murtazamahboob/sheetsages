@@ -11,6 +11,7 @@ import {
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
+import { Link } from "react-router-dom";
 import jsPDF from "jspdf";
 
 export interface AnalysisData {
@@ -308,9 +309,11 @@ const AnalysisResult = ({ data, fileName, onNewAnalysis, userPlan = "free" }: An
               <p className="text-primary-foreground/80 mb-4">
                 Upgrade to Pro or Business to download your analysis reports as PDF files.
               </p>
-              <Button variant="secondary" className="bg-white text-primary hover:bg-white/90">
-                Upgrade Now
-              </Button>
+              <Link to="/#pricing">
+                <Button variant="secondary" className="bg-white text-primary hover:bg-white/90">
+                  Upgrade Now
+                </Button>
+              </Link>
             </div>
           </div>
         )}
