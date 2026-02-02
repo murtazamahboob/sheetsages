@@ -59,9 +59,9 @@ const Header = () => {
         <div className="hidden md:flex items-center gap-4">
           {user ? (
             <>
-              <span className="text-sm text-muted-foreground">
+              <Link to="/dashboard" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
                 {user.user_metadata?.full_name || user.user_metadata?.name || user.email}
-              </span>
+              </Link>
               <Button variant="ghost" size="sm" onClick={handleLogout}>
                 <LogOut className="w-4 h-4 mr-2" />
                 Logout
@@ -116,9 +116,9 @@ const Header = () => {
             <div className="flex flex-col gap-2 pt-4 border-t border-border">
               {user ? (
                 <>
-                  <span className="text-sm text-muted-foreground">
+                  <Link to="/dashboard" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
                     {user.user_metadata?.full_name || user.user_metadata?.name || user.email}
-                  </span>
+                  </Link>
                   <Button variant="ghost" size="sm" onClick={handleLogout}>
                     <LogOut className="w-4 h-4 mr-2" />
                     Logout
