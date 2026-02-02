@@ -17,7 +17,7 @@ const Refund = () => {
               <h2 className="text-xl font-semibold text-foreground">1. Overview</h2>
               <p>
                 This Refund Policy outlines the circumstances under which SheetSage (operated by Murtaza Mahboob) 
-                may issue refunds for subscription payments. All payments are processed by Paddle, our Merchant of Record.
+                may issue refunds for subscription payments. All payments are processed by Lemon Squeezy, our Merchant of Record.
               </p>
             </section>
 
@@ -84,7 +84,7 @@ const Refund = () => {
                 If your refund is approved:
               </p>
               <ul className="list-disc pl-6 space-y-2">
-                <li>Refunds are processed by Paddle, our payment processor</li>
+                <li>Refunds are processed by Lemon Squeezy, our payment processor</li>
                 <li>The refund will be credited to your original payment method</li>
                 <li>Processing time is typically 5-10 business days, depending on your bank</li>
                 <li>You will receive an email confirmation when the refund is processed</li>
@@ -107,8 +107,8 @@ const Refund = () => {
             <section className="space-y-4">
               <h2 className="text-xl font-semibold text-foreground">9. Payment Processor</h2>
               <p>
-                All payments and refunds are processed by <strong>Paddle</strong>, our Merchant of Record. 
-                Paddle handles all payment processing, invoicing, and refund distribution on our behalf.
+                All payments and refunds are processed by <strong>Lemon Squeezy</strong>, our Merchant of Record. 
+                Lemon Squeezy handles all payment processing, invoicing, and refund distribution on our behalf.
               </p>
             </section>
 
