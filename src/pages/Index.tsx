@@ -6,15 +6,16 @@ import Features from "@/components/Features";
 import HowItWorks from "@/components/HowItWorks";
 import Pricing from "@/components/Pricing";
 import FileUpload from "@/components/FileUpload";
-import AnalysisResult, { AnalysisData } from "@/components/AnalysisResult";
+import EnhancedAnalysisResult from "@/components/EnhancedAnalysisResult";
 import Footer from "@/components/Footer";
-import { generateSampleAnalysis } from "@/lib/sampleAnalysis";
+import { generateSampleDataScienceAnalysis } from "@/lib/sampleDataScienceAnalysis";
 import { supabase } from "@/integrations/supabase/client";
 import { User } from "@supabase/supabase-js";
 import { useToast } from "@/hooks/use-toast";
+import { DataScienceAnalysis } from "@/types/dataScienceAnalysis";
 
 const Index = () => {
-  const [analysisData, setAnalysisData] = useState<AnalysisData | null>(null);
+  const [analysisData, setAnalysisData] = useState<DataScienceAnalysis | null>(null);
   const [fileName, setFileName] = useState<string>("");
   const [isProcessing, setIsProcessing] = useState(false);
   const [user, setUser] = useState<User | null>(null);
@@ -104,29 +105,12 @@ const Index = () => {
         throw new Error(response.error.message || "Analysis failed");
       }
 
-      // Transform the response to match our AnalysisData interface
-      const result = response.data;
-      const transformedData: AnalysisData = {
-        summary: result.summary?.keyMetrics?.map((m: any) => `${m.label}: ${m.value}`).join(", ") || "Analysis complete",
-        datasetInfo: `${result.summary?.totalRows || 0} rows × ${result.summary?.totalColumns || 0} columns | Data Quality: ${result.summary?.dataQuality || "Good"}`,
-        insights: result.insights?.filter((i: any) => i.type === "trend" || i.type === "opportunity").map((i: any) => i.description) || [],
-        warnings: result.insights?.filter((i: any) => i.type === "risk").map((i: any) => ({
-          text: i.description,
-          severity: i.impact as "low" | "medium" | "high",
-        })) || [],
-        opportunities: result.insights?.filter((i: any) => i.type === "opportunity").map((i: any) => i.description) || [],
-        actions: result.recommendations?.map((r: any) => r.action) || [],
-        stats: {
-          rows: result.summary?.totalRows || 0,
-          columns: result.summary?.totalColumns || 0,
-          issues: result.insights?.filter((i: any) => i.type === "risk").length || 0,
-        },
-      };
-
-      setAnalysisData(transformedData);
+      // Use the comprehensive DataScienceAnalysis directly from the edge function
+      const result = response.data as DataScienceAnalysis;
+      setAnalysisData(result);
       toast({
         title: "Analysis complete!",
-        description: "Your spreadsheet has been analyzed successfully.",
+        description: "Your spreadsheet has been analyzed by our Senior Data Scientist AI.",
       });
     } catch (error: any) {
       console.error("Analysis error:", error);
@@ -143,7 +127,7 @@ const Index = () => {
           title: "Using demo analysis",
           description: "We're showing sample results. Connect your Groq API for real analysis.",
         });
-        const analysis = generateSampleAnalysis(file.name);
+        const analysis = generateSampleDataScienceAnalysis(file.name);
         setAnalysisData(analysis);
       }
     } finally {
@@ -175,7 +159,7 @@ const Index = () => {
       
       {analysisData ? (
         <div className="pt-16">
-          <AnalysisResult 
+          <EnhancedAnalysisResult 
             data={analysisData} 
             fileName={fileName}
             onNewAnalysis={handleNewAnalysis}
