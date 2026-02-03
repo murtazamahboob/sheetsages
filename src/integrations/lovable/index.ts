@@ -2,7 +2,9 @@
 
 import { createLovableAuth } from "@lovable.dev/cloud-auth-js";
 import { supabase } from "../supabase/client";
-const lovableAuth = createLovableAuth({});
+
+const projectId = import.meta.env.VITE_SUPABASE_PROJECT_ID;
+const lovableAuth = createLovableAuth(projectId);
 
 export const lovable = {
   auth: {
