@@ -1,10 +1,28 @@
 import { Check, X, Sparkles, Zap, Rocket, Building2, ChevronRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom";
-import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { supabase } from "@/integrations/supabase/client";
+import { User } from "@supabase/supabase-js";
 
 const Pricing = () => {
   const [billingCycle, setBillingCycle] = useState<"monthly" | "yearly">("monthly");
+  const [user, setUser] = useState<User | null>(null);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    // Check current auth state
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      setUser(session?.user ?? null);
+    });
+
+    // Listen for auth changes
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+      setUser(session?.user ?? null);
+    });
+
+    return () => subscription.unsubscribe();
+  }, []);
 
   const plans = [
     {
@@ -243,18 +261,38 @@ const Pricing = () => {
                 </ul>
 
                 {/* CTA */}
-                <Link to={plan.ctaLink} className="block">
+                {plan.ctaLink === "/contact" ? (
+                  <Link to={plan.ctaLink} className="block">
+                    <Button
+                      variant={plan.variant}
+                      className={`w-full transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] group/btn`}
+                      size="lg"
+                    >
+                      {plan.cta}
+                      <ChevronRight className="w-4 h-4 ml-1 transition-transform duration-200 group-hover/btn:translate-x-1" />
+                    </Button>
+                  </Link>
+                ) : (
                   <Button
                     variant={plan.variant}
                     className={`w-full transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] group/btn ${
                       plan.popular ? "shadow-glow" : ""
                     }`}
                     size="lg"
+                    onClick={() => {
+                      if (user) {
+                        // User is logged in - go to dashboard (or checkout when ready)
+                        navigate("/dashboard");
+                      } else {
+                        // User not logged in - go to signup
+                        navigate(plan.ctaLink);
+                      }
+                    }}
                   >
-                    {plan.cta}
+                    {user ? (plan.name === "Free" ? "Go to Dashboard" : `Get ${plan.name}`) : plan.cta}
                     <ChevronRight className="w-4 h-4 ml-1 transition-transform duration-200 group-hover/btn:translate-x-1" />
                   </Button>
-                </Link>
+                )}
               </div>
             </div>
           ))}
