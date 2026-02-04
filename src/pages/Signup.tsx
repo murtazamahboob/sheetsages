@@ -34,11 +34,20 @@ const Signup = () => {
       });
 
       if (error) {
-        toast({
-          title: "Signup failed",
-          description: error.message,
-          variant: "destructive",
-        });
+        // Handle specific error cases
+        if (error.message.includes("User already registered") || error.message.includes("already been registered")) {
+          toast({
+            title: "Account already exists",
+            description: "This email is already registered. Please sign in instead.",
+            variant: "destructive",
+          });
+        } else {
+          toast({
+            title: "Signup failed",
+            description: error.message,
+            variant: "destructive",
+          });
+        }
       } else {
         setEmailSent(true);
       }
